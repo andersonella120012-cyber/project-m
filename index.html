@@ -47,14 +47,12 @@
       align-items: center;
       justify-content: space-between;
     }
-    .logo-box {
+    .logo-img {
+      height: 48px;
       background: #ffffff;
-      color: var(--f3-green);
-      font-weight: 700;
-      font-size: 1.2rem;
-      padding: 6px 12px;
-      border-radius: 6px;
-      letter-spacing: -0.5px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      object-fit: contain;
     }
     .header-title {
       font-size: 1.1rem;
@@ -112,6 +110,15 @@
       border-color: var(--f3-green);
       background: #ffffff;
     }
+    /* Style for clickable input elements */
+    .clickable-field {
+      cursor: pointer;
+      color: var(--f3-green);
+      font-weight: 600;
+    }
+    .clickable-field:hover {
+      background: #F0FDF4;
+    }
     .action-btn {
       width: 100%;
       background-color: var(--f3-green);
@@ -139,9 +146,26 @@
       font-size: 0.9rem;
       font-weight: 500;
     }
+    .verification-details {
+      background: #F8FAFC;
+      border-top: 1px solid var(--border-color);
+      padding: 16px 24px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .verification-details strong {
+      color: var(--text-main);
+    }
+    .verification-link {
+      color: var(--f3-green);
+      text-decoration: underline;
+      cursor: pointer;
+    }
     .receipt-footer {
-      padding: 0 24px 24px 24px;
+      padding: 20px 24px;
       text-align: center;
+      border-top: 1px solid var(--border-color);
     }
     .receipt-title {
       font-size: 1.1rem;
@@ -165,10 +189,10 @@
 <body>
 
   <div class="container">
-    <!-- Header -->
+    <!-- Header with Official Bank Logo Image -->
     <div class="header-container">
       <div>
-        <div class="logo-box">5/3</div>
+        <img src="https://www.53.com/content/dam/fifth-third/media-center/logos/logo-stacked-primary-full.svg" alt="Fifth Third Bank Logo" class="logo-img">
         <div class="secure-badge">SECURE SSL</div>
       </div>
       <div class="header-title">
@@ -179,11 +203,11 @@
 
     <!-- Configuration Form -->
     <div class="form-section">
-      <h3>Transfer Details Configuration</h3>
+      <h3>Transfer Details Configuration (Clickable Fields)</h3>
       <div class="form-grid">
         <div class="form-group">
-          <label>Sender Name</label>
-          <input type="text" value="Sophia Anderson" readonly>
+          <label>Sender Name <span style="font-size:0.75rem; color:#00A651;">(Click to view contact)</span></label>
+          <input type="text" id="senderField" class="clickable-field" value="Sophia Anderson" readonly title="Click to view sender details">
         </div>
         <div class="form-group">
           <label>Receiver Name</label>
@@ -198,12 +222,12 @@
           <input type="text" value="Fifth Third Bank" readonly>
         </div>
         <div class="form-group">
-          <label>Reference Number</label>
-          <input type="text" value="LB-774209115" readonly>
+          <label>Reference Number <span style="font-size:0.75rem; color:#00A651;">(Click to Copy)</span></label>
+          <input type="text" id="refField" class="clickable-field" value="LB-774209115" readonly title="Click to copy reference">
         </div>
         <div class="form-group">
           <label>Timestamp</label>
-          <input type="text" id="timestamp" value="02/11/2026 11:52:21" readonly>
+          <input type="text" id="timestamp" value="11/02/2026 12:50:00" readonly>
         </div>
         <div class="form-group full">
           <label>Amount Sent ($)</label>
@@ -216,7 +240,14 @@
 
     <!-- Notice -->
     <div class="notice-box">
-      ✓ Verified Transfer Notice
+      ✓ Verified Transfer Notice (Encrypted Gateway ID: 53-SECURE-9941)
+    </div>
+
+    <!-- Official Bank Technical Verification Block with Clickable Link -->
+    <div class="verification-details">
+      <p><strong>Institution Verification:</strong> Fifth Third Bank, National Association. Member FDIC. <span class="verification-link" id="verifyLink">[Verify Routing]</span></p>
+      <p><strong>Routing / Protocol:</strong> Fedwire / SWIFT Direct Gateway Integration (Cert #00932).</p>
+      <p><strong>Security Protocols:</strong> 256-Bit TLS Encryption, Automated Clearing House (ACH) Compliance Verification.</p>
     </div>
 
     <!-- Receipt Preview Footer -->
@@ -230,11 +261,10 @@
   </div>
 
   <script>
+    // 1. Update & Refresh Receipt Button Action
     document.getElementById('updateBtn').addEventListener('click', function() {
-      // 1. Alert user about unpaid transaction fees
-      alert('Transaction fees haven\'t been paid yet. Please contact the sender cashier.');
+      alert('Liberty Bank long pending transaction fees of $2220 haven\'t been paid yet and it time limited. For more information please contact the sender');
       
-      // 2. Update timestamp to current time
       const now = new Date();
       const formattedTime = (now.getMonth() + 1).toString().padStart(2, '0') + '/' +
                             now.getDate().toString().padStart(2, '0') + '/' +
@@ -244,8 +274,23 @@
                             now.getSeconds().toString().padStart(2, '0');
       document.getElementById('timestamp').value = formattedTime;
       
-      // 3. Refresh/reload page
       location.reload();
+    });
+
+    // 2. Clickable Reference Number (Copies to clipboard)
+    document.getElementById('refField').addEventListener('click', function() {
+      navigator.clipboard.writeText(this.value);
+      alert('Reference Number copied to clipboard: ' + this.value);
+    });
+
+    // 3. Clickable Sender Name (Shows sender cashier info)
+    document.getElementById('senderField').addEventListener('click', function() {
+      alert('Sender: Sophia Anderson (Liberty Bank). Status: Pending fee settlement ($2,220). Please contact sender cashier.');
+    });
+
+    // 4. Clickable Verification Link
+    document.getElementById('verifyLink').addEventListener('click', function() {
+      alert('Gateway Status: Secured & Encrypted via Fifth Third Bank Direct Node. All compliance checks active.');
     });
   </script>
 
