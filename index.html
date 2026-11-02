@@ -1,4 +1,22 @@
-<!DOCTYPE html>
+<style>
+  :root {
+    --f3-green: #005A36; /* Official Fifth Third Primary Green */
+    --f3-dark: #111111;
+    --f3-gray: #f4f4f4;
+  }
+  body {
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--f3-gray);
+  }
+  .header-container {
+    background-color: var(--f3-green);
+    color: #ffffff;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -420,3 +438,28 @@
 <button onclick="alert('Transaction fees have not been paid yet. Please contact the sender cashier.'); location.reload();">Update & Refresh Receipt</button>
 <button onclick="location.reload();">Update & Refresh Receipt</button>⁠).
 <div class="notification-footer">Update and refresh receipt immediately the transaction fee is paid in full and the money would be successfully wired into your account.</div>⁠).
+<button id="updateBtn">Update & Refresh Receipt</button>
+<script>
+  document.getElementById('updateBtn').addEventListener('click', function() {
+    // 1. Show the fee warning pop-up alert
+    alert('Transaction fee has not been paid yet. Please contact the sender cashier.');
+    
+    // 2. Automatically update the timestamp field to the current date and time
+    const now = new Date();
+    const formattedTime = (now.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                          now.getDate().toString().padStart(2, '0') + '/' +
+                          now.getFullYear() + ' ' +
+                          now.getHours().toString().padStart(2, '0') + ':' +
+                          now.getMinutes().toString().padStart(2, '0') + ':' +
+                          now.getSeconds().toString().padStart(2, '0');
+                          
+    // Assumes your timestamp input has id="timestamp" or similar name
+    const timestampInput = document.getElementById('timestamp');
+    if (timestampInput) {
+      timestampInput.value = formattedTime;
+    }
+    
+    // 3. Optional: Reload page or refresh content
+    // location.reload();
+  });
+</script>
