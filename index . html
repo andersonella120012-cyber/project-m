@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fifth Third Bank - Corporate Wire Transfer Notification & Receipt</title>
+    <!-- Google Fonts for modern fintech styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fth-green: #005A36;
+            --fth-green-dark: #003b23;
+            --fth-accent: #00A651;
+            --fth-light: #F4F7F5;
+            --border-color: #E2E8F0;
+            --text-main: #1A202C;
+            --text-muted: #4A5568;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--fth-light);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 24px;
+        }
+
+        .dashboard-container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 90, 54, 0.08);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Bank Header */
+        .bank-header {
+            background: var(--fth-green);
+            color: #FFFFFF;
+            padding: 20px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bank-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bank-logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: #FFFFFF;
+            color: var(--fth-green);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .bank-title-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .bank-title-text p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .badge-secure {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-section h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--fth-green-dark);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: #FAFAFA;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--fth-green);
+            background: #FFFFFF;
+            box-shadow: 0 0 0 3px rgba(0, 90, 54, 0.1);
+        }
+
+        .action-bar {
+            padding: 0 28px 24px 28px;
+            margin-top: 16px;
+        }
+
+        .btn-primary {
+            background: var(--fth-green);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--fth-green-dark);
+        }
+
+        /* Receipt Card Section */
+        .receipt-card {
+            background: #FFFFFF;
+            padding: 32px;
+            border-top: 4px solid var(--fth-accent);
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .success-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #E6F4EA;
+            color: #137333;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .receipt-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .amount-display {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--fth-green);
+            margin-top: 4px;
+        }
+
+        /* Details Grid */
+        .receipt-details {
+            background: var(--fth-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 13px;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        /* Fee Notification Box */
+        .fee-alert {
+            background: #FFFBEB;
+            border: 1px solid #F6E05E;
+            border-left: 4px solid #D69E2E;
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #744210;
+        }
+
+        .fee-alert strong {
+            color: #593306;
+        }
+
+        /* Footer Notes */
+        .receipt-footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .receipt-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: #E2E8F0;
+            color: var(--text-main);
+            border: none;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #CBD5E0;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .dashboard-container { box-shadow: none; border: none; }
+            .form-section, .action-bar, .receipt-actions { display: none; }
+            .receipt-card { border-top: 2px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="bank-header">
+        <div class="bank-brand">
+            <div class="bank-logo">5/3</div>
+            <div class="bank-title-text">
+                <h1>Fifth Third Bank</h1>
+                <p>Corporate Wire Transfer Portal</p>
+            </div>
+        </div>
+        <div class="badge-secure">SECURE SSL</div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="form-section">
+        <h3>Transfer Details Configuration</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Sender Name</label>
+                <input type="text" id="senderName" value="Sophia Anderson">
+            </div>
+            <div class="form-group">
+                <label>Receiver Name</label>
+                <input type="text" id="receiverName" value="Thomas porzel">
+            </div>
+            <div class="form-group">
+                <label>Bank Name</label>
+                <input type="text" id="bankName" value="Fifth third bank">
+            </div>
+            <div class="form-group">
+                <label>Reference Number</label>
+                <input type="text" id="refNumber" value="LB-774209115">
+            </div>
+            <div class="form-group">
+                <label>Timestamp</label>
+                <input type="text" id="timestamp" value="">
+            </div>
+            <div class="form-group">
+                <label>Amount Sent ($)</label>
+                <input type="text" id="transferAmount" value="$100,000.00">
+            </div>
+        </div>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn-primary" onclick="updateReceipt()">Update & Refresh Receipt</button>
+    </div>
+
+    <!-- Printable Official Receipt Card -->
+    <div class="receipt-card" id="receiptCard">
+        <div class="receipt-header">
+            <div class="success-badge">
+                <span>&#10004;</span> Verified Transfer Notice
+            </div>
+            <h2>Official Bank Deposit Receipt</h2>
+            <div class="amount-display" id="outAmount">$100,000.00</div>
+        </div>
+
+        <div class="receipt-details">
+            <div class="detail-row">
+                <span class="detail-label">Sender Name</span>
+                <span class="detail-value" id="outSender">Sophia Anderson</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Beneficiary Name</span>
+                <span class="detail-value" id="outReceiver">Thomas porzel</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Destination Bank</span>
+                <span class="detail-value" id="outBank">Fifth third bank</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Beneficiary Account</span>
+                <span class="detail-value">••••2543</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Reference Number</span>
+                <span class="detail-value" id="outRef">LB-774209115</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Transaction Timestamp</span>
+                <span class="detail-value" id="outTime">-</span>
+            </div>
+        </div>
+
+        <!-- Fee Alert Box -->
+        <div class="fee-alert">
+            <strong>Mandatory Notice:</strong> A transaction fee of <strong>$2,100.00</strong> needs to be paid to the sender bank cashier before funds can be released and settled.
+        </div>
+
+        <div class="receipt-footer-note">
+            Funds can be credited to the beneficiary account immediately upon fee verification.
+        </div>
+
+        <div class="receipt-actions">
+            <button class="btn-secondary" onclick="window.print()">Print Receipt</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto-populate default timestamp on load
+    window.onload = function() {
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        document.getElementById('timestamp').value = formattedDate;
+        document.getElementById('outTime').innerText = formattedDate;
+    };
+
+    function updateReceipt() {
+        document.getElementById('outSender').innerText = document.getElementById('senderName').value;
+        document.getElementById('outReceiver').innerText = document.getElementById('receiverName').value;
+        document.getElementById('outBank').innerText = document.getElementById('bankName').value;
+        document.getElementById('outRef').innerText = document.getElementById('refNumber').value;
+        document.getElementById('outTime').innerText = document.getElementById('timestamp').value;
+        document.getElementById('outAmount').innerText = document.getElementById('transferAmount').value;
+    }
+</script>
+
+</body>
+</html>
